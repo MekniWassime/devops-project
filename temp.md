@@ -1,0 +1,13 @@
+-   product ms
+    -   get all products
+    -   get product detail
+    -   buy product
+-   admin ms
+    -   admin stuff
+-   supplier ms
+    -   add product
+    -   view sold products
+    -   generate bills
+-   billing ms
+    -   generate product bill -> email too
+    -   generate products bill -> email too

@@ -1,5 +1,7 @@
 FROM python:3.10-alpine3.17
 #install peotry for dependency management
+COPY . .
+RUN ls -l .
 RUN pip install poetry
 #we will copy our app files under the /app folder
 WORKDIR /app

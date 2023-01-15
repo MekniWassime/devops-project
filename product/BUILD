@@ -1,3 +1,5 @@
+python_sources()
+
 docker_image(
     name="product_container",
 )
@@ -5,5 +7,3 @@ docker_image(
 poetry_requirements(
     name="poetry",
 )
-
-python_sources()

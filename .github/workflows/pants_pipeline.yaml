@@ -1,5 +1,7 @@
 name: Pants Pipeline
 on: [push]
+env:
+  GIT_SHA: "dgdsfe"
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -21,7 +23,7 @@ jobs:
           ls pants -l
           ./pants count-loc '**'
       - name: Setup admin container
-        run: "./pants package --docker-build-args='[GIT_SHA=${{ github.sha }}]' admin:admin_container"
+        run: "./pants package admin:admin_container"
       - name: Setup payment container
         run: "./pants package payment:payment_container"
       - name: Setup product container

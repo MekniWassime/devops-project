@@ -1,0 +1,11 @@
+#Used to build containers locally
+services:
+  admin:
+    build: admin/
+    container_name: admin
+  payment:
+    build: payment/
+    container_name: payment
+  product:
+    build: product/
+    container_name: product

@@ -3,8 +3,7 @@ python_sources()
 docker_image(
     name="admin_container",
     dependencies=[
-        ":admin_poetry",
-        "!3rdparty:reqs#django",
+        "!:admin_poetry",
         ":admin_django_manage",
     ]
 )

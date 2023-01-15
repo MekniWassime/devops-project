@@ -3,8 +3,7 @@ python_sources()
 docker_image(
     name="payment_container",
     dependencies=[
-        ":payment_poetry",
-        "!3rdparty:reqs#django",
+        "!:payment_poetry",
         ":payment_django_manage",
     ]
 )

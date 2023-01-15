@@ -3,8 +3,7 @@ python_sources()
 docker_image(
     name="product_container",
     dependencies=[
-        ":product_poetry",
-        "!3rdparty:reqs#django",
+        "!:product_poetry",
         ":product_django_manage",
     ]
 )

@@ -1,0 +1,30 @@
+python_library(
+    name="shared_app",
+
+    provides=setup_py(
+        name="shared-app",
+        version="0.1",
+        description="A Django app that contains shared modules.",
+        long_description="file: README.rst",
+        url="https://www.example.com/",
+        author="Mekni Wassime",
+        author_email="mekni.wassime@gmail.com",
+        license="MIT License",
+        classifiers=[
+            "Environment :: Web Environment",
+            "Framework :: Django",
+            "Framework :: Django :: 4.1",
+            "Intended Audience :: Developers",
+            "License :: OSI Approved :: BSD License",
+            "Operating System :: OS Independent",
+            "Programming Language :: Python",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3 :: Only",
+            "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: 3.9",
+            "Topic :: Internet :: WWW/HTTP",
+            "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+        ],
+        namespace_packages=['pants'],
+    ),
+)

@@ -16,6 +16,6 @@ pex_binary(
     name="payment_django_manage",
     entry_point="manage.py",
     dependencies=[
-        "!3rdparty:core#django",
+        "!3rdparty:reqs#django",
     ]
 )

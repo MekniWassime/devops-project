@@ -1,0 +1,9 @@
+version: "3.9"
+#mounts the current project folder as a volume
+#used only for running pants on windows inside a ubuntu container
+#if you are already on a non alpine linux system you can run pants directly
+services:
+  pants_runtime:
+    build: ./
+    volumes:
+      - ./:/app

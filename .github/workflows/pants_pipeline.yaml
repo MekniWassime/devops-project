@@ -12,15 +12,14 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.9"
-      - name: admin files
-        run: ls ./admin
-      - name: payment files
-        run: ls ./payment
-      - name: product files
-        run: ls ./product
       - name: init pants
         run: |
           ls pants -l
           ./pants count-loc '**'
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Publish containers
         run: "./pants publish ::"

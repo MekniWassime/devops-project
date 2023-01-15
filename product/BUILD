@@ -4,6 +4,7 @@ docker_image(
     name="product_container",
     dependencies=[
         ":product_poetry",
+        "!3rdparty:reqs#django",
         ":product_django_manage",
     ]
 )
@@ -15,7 +16,4 @@ poetry_requirements(
 pex_binary(
     name="product_django_manage",
     entry_point="manage.py",
-    dependencies=[
-        "!3rdparty:reqs#django",
-    ]
 )

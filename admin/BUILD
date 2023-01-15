@@ -6,7 +6,7 @@ docker_image(
         # ":admin_poetry",
         ":admin_django_manage",
     ],
-    image_tags=["admin-{build_args.GIT_SHA}"]
+    image_tags=["admin-{build_args.GIT_SHA}", "admin-latest"]
 )
 
 # poetry_requirements(

@@ -6,7 +6,7 @@ docker_image(
         # "!:payment_poetry",
         ":payment_django_manage",
     ],
-    image_tags=["payment-{build_args.GIT_SHA}"]
+    image_tags=["payment-{build_args.GIT_SHA}", "payment-latest"]
 )
 
 # poetry_requirements(

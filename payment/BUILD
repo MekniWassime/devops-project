@@ -3,9 +3,8 @@ python_sources()
 docker_image(
     name="payment_container",
     dependencies = [
-        "./pyproject.toml"
+        ".:pyproject.toml"
     ],
-    
 )
 
 poetry_requirements(

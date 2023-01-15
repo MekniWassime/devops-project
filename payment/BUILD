@@ -4,6 +4,7 @@ docker_image(
     name="payment_container",
     dependencies=[
         ":payment_poetry",
+        "!:payment_poetry#django",
         ":payment_django_manage",
     ]
 )

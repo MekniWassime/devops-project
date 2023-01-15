@@ -4,6 +4,7 @@ docker_image(
     name="admin_container",
     dependencies=[
         ":admin_poetry",
+        "!:admin_poetry#django",
         ":admin_django_manage",
     ]
 )

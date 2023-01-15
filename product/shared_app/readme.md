@@ -1,1 +1,0 @@
-#shared django app

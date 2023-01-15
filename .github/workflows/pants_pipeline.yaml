@@ -14,3 +14,5 @@ jobs:
         run: |
           ls pants -l
           ./pants count-loc '**'
+      - name: Setup shared_app package
+        run: pants setup.py

@@ -11,6 +11,9 @@ docker_image(
 
 poetry_requirements(
     name="product_poetry",
+    dependencies=[
+        "!3rdparty::#django"
+    ]
 )
 
 pex_binary(

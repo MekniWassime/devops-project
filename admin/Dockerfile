@@ -1,4 +1,5 @@
 FROM python:3.10-alpine3.17
+RUN touch hello
 COPY . .
 RUN ls -l .
 #install peotry for dependency management

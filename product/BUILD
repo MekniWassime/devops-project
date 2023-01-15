@@ -3,16 +3,16 @@ python_sources()
 docker_image(
     name="product_container",
     dependencies=[
-        ":poetry",
-        ":django_manage",
+        ":product_poetry",
+        ":product_django_manage",
     ]
 )
 
 poetry_requirements(
-    name="poetry",
+    name="product_poetry",
 )
 
 pex_binary(
-    name="django_manage",
+    name="product_django_manage",
     entry_point="manage.py",
 )

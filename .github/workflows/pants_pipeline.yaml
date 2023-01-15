@@ -10,6 +10,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.9"
+      - name: admin files
+        run: ls ./admin
+      - name: payment files
+        run: ls ./payment
+      - name: product files
+        run: ls ./product
       - name: init pants
         run: |
           ls pants -l

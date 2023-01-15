@@ -1,7 +1,7 @@
 python_sources()
 
 docker_image(
-    name="admin",
+    name="admin_container",
 )
 
 poetry_requirements(

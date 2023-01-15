@@ -1,5 +1,5 @@
 docker_image(
-    name="product",
+    name="product_container",
 )
 
 poetry_requirements(

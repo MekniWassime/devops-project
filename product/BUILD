@@ -3,7 +3,7 @@ python_sources()
 docker_image(
     name="product_container",
     dependencies=[
-        "pyproject.toml"
+        "pyproject.toml:"
     ],
 )
 

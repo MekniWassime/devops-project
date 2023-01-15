@@ -10,9 +10,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.9"
-      - name: Test pants
+      - name: init pants
         run: |
           ls pants -l
           ./pants count-loc '**'
+      - name: Print pants goals
+        run: ./pants help goals
       - name: Setup shared_app package
         run: "./pants setup.py ::"

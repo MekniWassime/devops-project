@@ -5,3 +5,7 @@ backend_packages = [
     "pants.backend.docker",
     "pants.backend.python"
 ]
+
+[docker]
+default_repository = "mekniwassime/devops_project"
+build_args = ["GIT_SHA"]

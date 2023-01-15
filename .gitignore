@@ -1,3 +1,7 @@
 **/migrations/
 **/db.sqlite3
 **/__pycache__
+# Pants workspace files
+/.pants.*
+/dist/
+/.pids

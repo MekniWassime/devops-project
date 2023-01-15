@@ -1,7 +1,8 @@
 name: Pants Pipeline
 on: [push]
 env:
-  GIT_SHA: {{ github.sha }}
+  #GIT_SHA: {{ github.sha }}
+  AWS_REGION: eu-north-1
 jobs:
   Build:
     runs-on: ubuntu-latest

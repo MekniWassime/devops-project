@@ -5,7 +5,8 @@ docker_image(
     dependencies=[
         # "!:product_poetry",
         ":product_django_manage",
-    ]
+    ],
+    image_tags=["product-{build_args.GIT_COMMIT}"]
 )
 
 # poetry_requirements(

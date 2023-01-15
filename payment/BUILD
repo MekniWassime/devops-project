@@ -5,7 +5,8 @@ docker_image(
     dependencies=[
         # "!:payment_poetry",
         ":payment_django_manage",
-    ]
+    ],
+    image_tags=["payment-{build_args.GIT_COMMIT}"]
 )
 
 # poetry_requirements(

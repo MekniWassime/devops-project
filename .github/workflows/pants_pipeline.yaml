@@ -23,4 +23,4 @@ jobs:
           ls pants -l
           ./pants count-loc '**'
       - name: Publish containers
-        run: "./pants package ::"
+        run: "./pants publish ::"

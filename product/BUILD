@@ -4,7 +4,7 @@ docker_image(
     name="product_container",
     dependencies=[
         ":product_poetry",
-        "!3rdparty::#django",
+        "!3rdparty:#django",
         ":product_django_manage",
     ]
 )

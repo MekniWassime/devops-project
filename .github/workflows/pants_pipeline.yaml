@@ -1,7 +1,7 @@
 name: Pants Pipeline
 on: [push]
 env:
-  GIT_SHA: ${{ github.sha}}
+  GIT_SHA: ${{ github.sha }}
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -22,9 +22,5 @@ jobs:
         run: |
           ls pants -l
           ./pants count-loc '**'
-      - name: Setup admin container
-        run: "./pants package admin:admin_container"
-      - name: Setup payment container
-        run: "./pants package payment:payment_container"
-      - name: Setup product container
-        run: "./pants package product:product_container"
+      - name: Publish containers
+        run: "./pants package ::"

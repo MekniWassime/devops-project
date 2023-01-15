@@ -21,7 +21,7 @@ jobs:
           ls pants -l
           ./pants count-loc '**'
       - name: Setup admin container
-        run: "env -E GIT_SHA=${{ github.sha }} ./pants package admin:admin_container"
+        run: "-E env GIT_SHA=${{ github.sha }} ./pants package admin:admin_container"
       - name: Setup payment container
         run: "./pants package payment:payment_container"
       - name: Setup product container

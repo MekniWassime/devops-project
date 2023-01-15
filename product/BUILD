@@ -2,9 +2,7 @@ python_sources()
 
 docker_image(
     name="product_container",
-    dependencies=[
-        "pyproject.toml:"
-    ],
+    context_root="./"
 )
 
 poetry_requirements(

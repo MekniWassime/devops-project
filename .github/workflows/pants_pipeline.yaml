@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print env variable
-        uses: echo $GIT_SHA
+        run: echo $GIT_SHA
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up Python 3.9

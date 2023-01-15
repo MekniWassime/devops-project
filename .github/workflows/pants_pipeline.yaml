@@ -15,4 +15,4 @@ jobs:
           ls pants -l
           ./pants count-loc '**'
       - name: Setup shared_app package
-        run: "./pants package ::
+        run: "./pants package ::"

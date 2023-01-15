@@ -6,7 +6,7 @@ docker_image(
         # "!:product_poetry",
         ":product_django_manage",
     ],
-    image_tags=["product-{build_args.GIT_COMMIT}"]
+    image_tags=["product-{build_args.GIT_SHA}"]
 )
 
 # poetry_requirements(

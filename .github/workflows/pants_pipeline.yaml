@@ -7,4 +7,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test pants
+        run: ls pants -l
         run: ./pants count-loc '**'

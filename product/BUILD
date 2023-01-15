@@ -2,7 +2,9 @@ python_sources()
 
 docker_image(
     name="product_container",
-    context_root="./"
+    dependencies=[
+        "product:poetry"
+    ]
 )
 
 poetry_requirements(

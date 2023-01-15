@@ -2,5 +2,5 @@
 requires = ['setuptools>=40.8.0', 'wheel']
 build-backend = 'setuptools.build_meta:__legacy__'
 [docker]
-default_repository="mekniwassime/devops_project"
 build_args = ["GIT_SHA"]
+default_repository="mekniwassime/devops_project"

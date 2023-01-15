@@ -1,5 +1,5 @@
 docker_image(
-    name="docker",
+    name="payment",
 )
 
 python_sources()

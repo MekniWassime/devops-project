@@ -4,7 +4,6 @@ docker_image(
     name="admin_container",
     dependencies=[
         ":admin_poetry",
-        "!3rdparty:core#django",
         ":admin_django_manage",
     ]
 )
@@ -16,4 +15,7 @@ poetry_requirements(
 pex_binary(
     name="admin_django_manage",
     entry_point="manage.py",
+    dependencies=[
+        "!3rdparty:core#django",
+    ]
 )

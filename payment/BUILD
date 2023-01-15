@@ -4,7 +4,6 @@ docker_image(
     name="payment_container",
     dependencies=[
         ":payment_poetry",
-        "!3rdparty:core#django",
         ":payment_django_manage",
     ]
 )
@@ -16,4 +15,7 @@ poetry_requirements(
 pex_binary(
     name="payment_django_manage",
     entry_point="manage.py",
+    dependencies=[
+        "!3rdparty:core#django",
+    ]
 )

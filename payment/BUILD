@@ -3,7 +3,7 @@ python_sources()
 docker_image(
     name="payment_container",
     dependencies = [
-        "payment:pyproject.toml"
+        ":pyproject.toml"
     ],
 )
 

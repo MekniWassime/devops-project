@@ -1,15 +1,18 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: payment-ingress
-  namespace: payment-ns
   annotations:
-    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: ingress-nginx
   rules:
   - http:
       paths:
-        - path: /payment
-          backend:
-            serviceName: payment-svc
-            servicePort: payment-svc-port
+      - path: /payment
+        pathType: Prefix
+        backend:
+          service:
+            name: payment-svc
+            port:
+              number: payment-svc-port

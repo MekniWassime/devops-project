@@ -4,7 +4,7 @@ metadata:
   name: cluster-config
 spec:
   destination:
-    name: 'aks-cluster'
+    name: ''
     namespace: test
     server: 'https://kubernetes.default.svc'
   source:

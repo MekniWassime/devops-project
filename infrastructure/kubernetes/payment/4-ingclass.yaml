@@ -3,4 +3,4 @@ kind: IngressClass
 metadata:
   name: default-ingress-class
 spec:
-  controller: test
+  controller: test.io/hello

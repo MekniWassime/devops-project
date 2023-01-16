@@ -16,4 +16,4 @@ spec:
           service:
             name: payment-svc
             port:
-              number: payment-svc-port
+              name: payment-svc-port

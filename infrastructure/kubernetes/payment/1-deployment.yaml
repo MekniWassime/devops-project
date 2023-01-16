@@ -4,7 +4,6 @@ metadata:
   name: payment-deployment
   labels:
     app: payment
-  namespace: payment-ns
 spec:
   replicas: 1
   selector:

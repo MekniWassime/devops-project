@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: payment-ingress
+  namespace: payment-ns
   annotations:
     ingress.kubernetes.io/rewrite-target: /
 spec:

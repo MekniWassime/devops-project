@@ -1,5 +1,5 @@
 name: Devops Pipeline
-on: [push]
+on: [workflow_dispatch]
 
 jobs:
   Test:

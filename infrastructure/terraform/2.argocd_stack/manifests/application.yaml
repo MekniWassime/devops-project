@@ -1,17 +1,20 @@
-server:
-  additionalApplications:
-   - name: cluster-config
-     namespace: argocd
-     project: default
-     source:
-       repoURL: https://github.com/MekniWassime/devops-project.git
-       targetRevision: HEAD
-       path: infrastructure/kubernetes/
-       directory:
-         recurse: true
-     destination:
-       server: https://kubernetes.default.svc
-     syncPolicy:
-       automated:
-         prune: false
-         selfHeal: false
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-config
+spec:
+  destination:
+    name: 'aks-cluster'
+    namespace: test
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: infrastructure/kubernetes
+    repoURL: 'https://github.com/MekniWassime/devops-project.git'
+    targetRevision: HEAD
+    directory:
+      recurse: true
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

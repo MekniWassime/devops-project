@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-y*(8r(2yidie!o1^n-howo7#9xv_oi(8^01_i2ij%6de&*3wa!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["www.devops-project.com"]
+ALLOWED_HOSTS = ["www.devops-project.com", "*"]
 
 ADMIN_ENABLED = True
 
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'payment_app',
     'django_prometheus',
+    'payment_app',
 ]
 
 MIDDLEWARE = [

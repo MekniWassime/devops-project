@@ -1,0 +1,460 @@
+---
+# Source: wordpress/charts/mariadb/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: release-name-mariadb
+  labels:
+    app: "mariadb"
+    chart: "mariadb-7.3.12"
+    release: "release-name"
+    heritage: "Helm"
+type: Opaque
+data:
+  mariadb-root-password: "RkxsMENwNUpYTw=="
+  
+  mariadb-password: "akVOYTlEUlRRUA=="
+---
+# Source: wordpress/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: release-name-wordpress
+  labels:
+    app.kubernetes.io/name: wordpress
+    helm.sh/chart: wordpress-9.0.3
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+type: Opaque
+data:
+  wordpress-password: "OEtxdlFTMG9TcQ=="
+---
+# Source: wordpress/charts/mariadb/templates/master-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: release-name-mariadb
+  labels:
+    app: "mariadb"
+    component: "master"
+    chart: "mariadb-7.3.12"
+    release: "release-name"
+    heritage: "Helm"
+data:
+  my.cnf: |-
+    [mysqld]
+    skip-name-resolve
+    explicit_defaults_for_timestamp
+    basedir=/opt/bitnami/mariadb
+    plugin_dir=/opt/bitnami/mariadb/plugin
+    port=3306
+    socket=/opt/bitnami/mariadb/tmp/mysql.sock
+    tmpdir=/opt/bitnami/mariadb/tmp
+    max_allowed_packet=16M
+    bind-address=0.0.0.0
+    pid-file=/opt/bitnami/mariadb/tmp/mysqld.pid
+    log-error=/opt/bitnami/mariadb/logs/mysqld.log
+    character-set-server=UTF8
+    collation-server=utf8_general_ci
+    
+    [client]
+    port=3306
+    socket=/opt/bitnami/mariadb/tmp/mysql.sock
+    default-character-set=UTF8
+    plugin_dir=/opt/bitnami/mariadb/plugin
+    
+    [manager]
+    port=3306
+    socket=/opt/bitnami/mariadb/tmp/mysql.sock
+    pid-file=/opt/bitnami/mariadb/tmp/mysqld.pid
+---
+# Source: wordpress/charts/mariadb/templates/tests.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: release-name-mariadb-tests
+data:
+  run.sh: |-
+    @test "Testing MariaDB is accessible" {
+      mysql -h release-name-mariadb -uroot -p$MARIADB_ROOT_PASSWORD -e 'show databases;'
+    }
+---
+# Source: wordpress/templates/pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: release-name-wordpress
+  labels:
+    app.kubernetes.io/name: wordpress
+    helm.sh/chart: wordpress-9.0.3
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "10Gi"
+---
+# Source: wordpress/charts/mariadb/templates/master-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-mariadb
+  labels:
+    app: "mariadb"
+    component: "master"
+    chart: "mariadb-7.3.12"
+    release: "release-name"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  ports:
+  - name: mysql
+    port: 3306
+    targetPort: mysql
+  selector:
+    app: "mariadb"
+    component: "master"
+    release: "release-name"
+---
+# Source: wordpress/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-wordpress
+  labels:
+    app.kubernetes.io/name: wordpress
+    helm.sh/chart: wordpress-9.0.3
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: "Cluster"
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: https
+      port: 443
+      targetPort: https
+  selector:
+    app.kubernetes.io/name: wordpress
+    app.kubernetes.io/instance: release-name
+---
+# Source: wordpress/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-wordpress
+  labels:
+    app.kubernetes.io/name: wordpress
+    helm.sh/chart: wordpress-9.0.3
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: wordpress
+      app.kubernetes.io/instance: release-name
+  strategy: 
+    type: RollingUpdate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: wordpress
+        helm.sh/chart: wordpress-9.0.3
+        app.kubernetes.io/instance: release-name
+        app.kubernetes.io/managed-by: Helm
+    spec:      
+      hostAliases:
+        - ip: "127.0.0.1"
+          hostnames:
+            - "status.localhost"
+      securityContext:
+        runAsUser: 1001
+        fsGroup: 1001
+      containers:
+        - name: wordpress
+          image: docker.io/bitnami/wordpress:5.3.2-debian-10-r32
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+            - name: MARIADB_HOST
+              value: "release-name-mariadb"
+            - name: MARIADB_PORT_NUMBER
+              value: "3306"
+            - name: WORDPRESS_DATABASE_NAME
+              value: "bitnami_wordpress"
+            - name: WORDPRESS_DATABASE_USER
+              value: "bn_wordpress"
+            - name: WORDPRESS_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-mariadb
+                  key: mariadb-password
+            - name: WORDPRESS_USERNAME
+              value: "user"
+            - name: WORDPRESS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-wordpress
+                  key: wordpress-password
+            - name: WORDPRESS_EMAIL
+              value: "user@example.com"
+            - name: WORDPRESS_FIRST_NAME
+              value: "FirstName"
+            - name: WORDPRESS_LAST_NAME
+              value: "LastName"
+            - name: WORDPRESS_HTACCESS_OVERRIDE_NONE
+              value: "no"
+            - name: WORDPRESS_BLOG_NAME
+              value: "User's Blog!"
+            - name: WORDPRESS_SKIP_INSTALL
+              value: "no"
+            - name: WORDPRESS_TABLE_PREFIX
+              value: "wp_"
+            - name: WORDPRESS_SCHEME
+              value: "http"
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 8443
+          livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+            httpGet:
+              path: /wp-login.php
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+            httpGet:
+              path: /wp-login.php
+              port: http
+          volumeMounts:
+            - mountPath: /bitnami/wordpress
+              name: wordpress-data
+              subPath: wordpress
+          resources:
+            limits: {}
+            requests:
+              cpu: 300m
+              memory: 512Mi
+      volumes:
+        - name: wordpress-data
+          persistentVolumeClaim:
+            claimName: release-name-wordpress
+---
+# Source: wordpress/charts/mariadb/templates/master-statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: release-name-mariadb
+  labels:
+    app: mariadb
+    chart: mariadb-7.3.12
+    release: release-name
+    heritage: Helm
+    component: master
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+      release: release-name
+      component: master
+  serviceName: release-name-mariadb
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mariadb
+        chart: mariadb-7.3.12
+        release: release-name
+        component: master
+    spec:
+      serviceAccountName: default
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app: mariadb
+                    release: release-name      
+      initContainers:
+      containers:
+        - name: "mariadb"
+          image: docker.io/bitnami/mariadb:10.3.22-debian-10-r27
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-mariadb
+                  key: mariadb-root-password
+            - name: MARIADB_USER
+              value: "bn_wordpress"
+            - name: MARIADB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-mariadb
+                  key: mariadb-password
+            - name: MARIADB_DATABASE
+              value: "bitnami_wordpress"
+          ports:
+            - name: mysql
+              containerPort: 3306
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - |
+                  password_aux="${MARIADB_ROOT_PASSWORD:-}"
+                  if [ -f "${MARIADB_ROOT_PASSWORD_FILE:-}" ]; then
+                      password_aux=$(cat $MARIADB_ROOT_PASSWORD_FILE)
+                  fi
+                  mysqladmin status -uroot -p$password_aux
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - |
+                  password_aux="${MARIADB_ROOT_PASSWORD:-}"
+                  if [ -f "${MARIADB_ROOT_PASSWORD_FILE:-}" ]; then
+                      password_aux=$(cat $MARIADB_ROOT_PASSWORD_FILE)
+                  fi
+                  mysqladmin status -uroot -p$password_aux
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/mariadb
+            - name: config
+              mountPath: /opt/bitnami/mariadb/conf/my.cnf
+              subPath: my.cnf
+      volumes:
+        - name: config
+          configMap:
+            name: release-name-mariadb
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          app: "mariadb"
+          component: "master"
+          release: "release-name"
+          heritage: "Helm"
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "8Gi"
+---
+# Source: wordpress/charts/mariadb/templates/test-runner.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "release-name-mariadb-test-oosch"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  initContainers:
+    - name: "test-framework"
+      image: docker.io/dduportal/bats:0.4.0
+      command:
+        - "bash"
+        - "-c"
+        - |
+          set -ex
+          # copy bats to tools dir
+          cp -R /usr/local/libexec/ /tools/bats/
+      volumeMounts:
+      - mountPath: /tools
+        name: tools
+  containers:
+    - name: mariadb-test
+      image: docker.io/bitnami/mariadb:10.3.22-debian-10-r27
+      imagePullPolicy: "IfNotPresent"
+      command: ["/tools/bats/bats", "-t", "/tests/run.sh"]
+      env:
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: release-name-mariadb
+              key: mariadb-root-password
+      volumeMounts:
+      - mountPath: /tests
+        name: tests
+        readOnly: true
+      - mountPath: /tools
+        name: tools
+  volumes:
+  - name: tests
+    configMap:
+      name: release-name-mariadb-tests
+  - name: tools
+    emptyDir: {}
+  restartPolicy: Never
+---
+# Source: wordpress/templates/tests/test-mariadb-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "release-name-credentials-test"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: release-name-credentials-test
+      image: docker.io/bitnami/wordpress:5.3.2-debian-10-r32
+      imagePullPolicy: "IfNotPresent"
+      securityContext:
+        runAsUser: 1001
+      env:
+        - name: MARIADB_HOST
+          value: release-name-mariadb
+        - name: MARIADB_PORT
+          value: "3306"
+        - name: WORDPRESS_DATABASE_NAME
+          value: "bitnami_wordpress"
+        - name: WORDPRESS_DATABASE_USER
+          value: "bn_wordpress"
+        - name: WORDPRESS_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: release-name-mariadb
+              key: mariadb-password
+      command:
+        - /bin/bash
+        - -ec
+        - |
+          mysql --host=$MARIADB_HOST --port=$MARIADB_PORT --user=$WORDPRESS_DATABASE_USER --password=$WORDPRESS_DATABASE_PASSWORD
+  restartPolicy: Never

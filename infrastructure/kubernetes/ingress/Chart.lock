@@ -1,0 +1,6 @@
+dependencies:
+- name: wordpress
+  repository: https://charts.helm.sh/stable
+  version: 9.0.3
+digest: sha256:96439d705c9bd5431947de60a61b3bfc04f59ff461db50cb0eba99e9ae48b52a
+generated: "2023-01-17T08:28:32.428196227+01:00"

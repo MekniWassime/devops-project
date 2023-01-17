@@ -19,5 +19,5 @@ metadata:
     helm.sh/chart: argo-cd-4.9.7
   name: argocd-cm
   namespace: argocd
-  resourceVersion: '2459'
+  resourceVersion: '10399'
   uid: 0b04f01d-db84-4504-a9b1-a2023608d6d5

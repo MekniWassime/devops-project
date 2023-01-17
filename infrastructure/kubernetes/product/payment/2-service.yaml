@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  product-svc
+  namespace: product-ns
+spec:
+  selector:
+    app:  product
+  type:  ClusterIP
+  ports:
+  - name:  product-svc-port
+    port:  80
+    targetPort:  8000

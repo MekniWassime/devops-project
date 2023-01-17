@@ -6,13 +6,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: www.example.com
+    - host: www.devops-project.com
       http:
         paths:
           - pathType: Prefix
             backend:
               service:
-                name: exampleService
+                name: payment-svc
                 port:
                   number: 80
-            path: /
+            path: /payment/

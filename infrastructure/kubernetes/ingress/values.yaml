@@ -1,6 +1,0 @@
-ingress-nginx:
-  release-name: test
-controller:
-  scope:
-    enable: true
-    namespace: ingress-nginx

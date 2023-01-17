@@ -16,16 +16,5 @@ spec:
   project: default
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
-
-apiVersion: v1
-kind: Secret
-metadata:
-  name: private-repo
-  namespace: argocd
-  labels:
-    argocd.argoproj.io/secret-type: repository
-stringData:
-  type: git
-  url: https://github.com/argoproj/private-repo
+      prune: false
+      selfHeal: false

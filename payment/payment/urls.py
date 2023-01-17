@@ -20,6 +20,7 @@ from payment_app.views import PaymentList
 
 urlpatterns = [
     path('payment/', PaymentList.as_view(), name='payment_list'),
+    path('', include('django_prometheus.urls')),
 ]
 
 if(settings.ADMIN_ENABLED == True):

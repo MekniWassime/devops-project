@@ -1,6 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  # prometheus.io/port: "9090"
+  # prometheus.io/path: "/metrics"
+  # prometheus.io/scrape: "true"
   name: admin-deployment
   labels:
     app: admin

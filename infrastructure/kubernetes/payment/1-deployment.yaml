@@ -21,6 +21,6 @@ spec:
     spec:
       containers:
       - name: payment
-        image: mekniwassime/devops_project:payment-c61050728b2a55573adcecf72a268b8286327d80
+        image: mekniwassime/devops_project:payment-06d331c79f99bd5d168f7bc610a5b16c5ac4fa0f
         ports:
         - containerPort: 80

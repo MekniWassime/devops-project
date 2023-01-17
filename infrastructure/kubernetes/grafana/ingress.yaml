@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: www.devops-project.com
+      http:
+        paths:
+          - pathType: Prefix
+            backend:
+              service:
+                name: prometheus-grafana
+                port:
+                  number: 80
+            path: /grafana/

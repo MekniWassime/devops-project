@@ -15,4 +15,4 @@ spec:
                 name: payment-svc
                 port:
                   number: 80
-            path: /payment/
+            path: /

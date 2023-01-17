@@ -3,7 +3,6 @@ name = "payment"
 version = "0.1.0"
 description = ""
 authors = ["Mekni_Wassime <mekni.wassime@gmail.com>"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"

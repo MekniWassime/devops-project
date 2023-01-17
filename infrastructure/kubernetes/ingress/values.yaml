@@ -1,1 +1,4 @@
 ingress-nginx:
+  controller:
+    scope:
+      namespace: ingress-nginx

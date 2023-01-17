@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: www.devops-project.com
+      http:
+        paths:
+          - pathType: Prefix
+            backend:
+              service:
+                name: argocd-svc
+                port:
+                  number: 443
+            path: /argocd/

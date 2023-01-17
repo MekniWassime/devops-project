@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: www.devops-project.com/grafana
+    - host: www.grafana.devops-project.com/
       http:
         paths:
           - pathType: Prefix
@@ -15,4 +15,4 @@ spec:
                 name: prometheus-grafana
                 port:
                   number: 80
-            path: /grafana/
+            path: /

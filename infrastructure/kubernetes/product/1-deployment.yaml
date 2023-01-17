@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: product
-        image: mekniwassime/devops_project:product-latest
+        image: mekniwassime/devops_project:product-a14c4e34ed61d898450dd61c4e55cca71273929f
         ports:
         - containerPort: 80

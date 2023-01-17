@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  prometheus.io/port: "9090"
+  prometheus.io/port: "8000"
   prometheus.io/path: "/metrics"
   prometheus.io/scrape: "true"
   name: payment-deployment

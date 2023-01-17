@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: admin-ns
+  labels:
+    name: admin-ns

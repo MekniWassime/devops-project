@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  admin-svc
+  namespace: admin-ns
+spec:
+  selector:
+    app:  admin
+  type:  ClusterIP
+  ports:
+  - name:  admin-svc-port
+    port:  80
+    targetPort:  8000

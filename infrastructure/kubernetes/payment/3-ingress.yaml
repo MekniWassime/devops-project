@@ -1,19 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: payment-ingress
+  name: example
   namespace: payment-ns
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: default-ingress-class
+  ingressClassName: nginx
   rules:
-  - http:
-      paths:
-      - path: /payment
-        pathType: Prefix
-        backend:
-          service:
-            name: payment-svc
-            port:
-              number: 80
+    - host: www.example.com
+      http:
+        paths:
+          - pathType: Prefix
+            backend:
+              service:
+                name: exampleService
+                port:
+                  number: 80
+            path: /
+  # This section is only required if TLS is to be enabled for the Ingress
+  tls:
+    - hosts:
+      - www.example.com
+      secretName: example-tls

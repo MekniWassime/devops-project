@@ -14,5 +14,5 @@ spec:
               service:
                 name: argocd-svc
                 port:
-                  number: 443
+                  number: 80
             path: /argocd/

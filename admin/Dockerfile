@@ -13,7 +13,6 @@ COPY . .
 ENV DEBUG=False
 #manage migrations
 RUN poetry run python manage.py makemigrations
-RUN poetry run python manage.py makemigrations shared_app
 RUN poetry run python manage.py migrate
 #run our python app inside of the poetry virtual environment
 CMD ["poetry","run","python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -7,7 +7,6 @@ metadata:
     tags.datadoghq.com/service: payment-svc
     tags.datadoghq.com/version: "1"
     admission.datadoghq.com/enabled: "true"
-  labels:
     app: payment
   namespace: payment-ns
 spec:

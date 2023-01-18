@@ -26,8 +26,8 @@ spec:
         image: mekniwassime/devops_project:sidecarproxy-f1ccd9bda3a30745731b40e454da3c60207c5413
         env:
         - name: PORT
-          value: 3000
+          value: "3000"
         - name: TARGET_PORT
-          value: 8000
+          value: "8000"
         - name: UPSTREAM_HOST
           value: "localhost"

@@ -31,7 +31,9 @@ The application is deployed onto Azure Kubernetes service, the manifests that de
 
 # Automatic provisioning
 4 kubernetes microstacks were implemeneted
+
 ![image](https://user-images.githubusercontent.com/60438665/213251545-8fda50c6-d848-41e9-8a1a-31ca62a79534.png)
+
 
 - 1st stack provisions our terraform backend that remotly hold our tf state and an azure keyvault where we can save secrets shared between stacks
 - 2nd stack provisions a postgres database

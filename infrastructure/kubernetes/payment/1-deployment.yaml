@@ -30,7 +30,7 @@ spec:
           name: apmsocketpath
       containers:
       - name: payment
-        image: mekniwassime/devops_project:payment-06d331c79f99bd5d168f7bc610a5b16c5ac4fa0f
+        image: mekniwassime/devops_project:payment-211545822eb9d3122df573ed2d6e5a0cbd321fb1
         env:
           - name: DD_LOGS_INJECTION
             value: "true"

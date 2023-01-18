@@ -10,10 +10,6 @@ metadata:
     app: payment
   namespace: payment-ns
 spec:
-  volumes:
-    - hostPath:
-      path: /var/run/datadog/
-    name: apmsocketpath
   replicas: 1
   selector:
     matchLabels:
@@ -27,6 +23,10 @@ spec:
       labels:
         app: payment
     spec:
+      volumes:
+        - hostPath:
+            path: /var/run/datadog/
+          name: apmsocketpath
       containers:
       - name: payment
         image: mekniwassime/devops_project:payment-06d331c79f99bd5d168f7bc610a5b16c5ac4fa0f

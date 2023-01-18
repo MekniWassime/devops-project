@@ -4,12 +4,14 @@ from rest_framework import viewsets, generics, mixins, status
 from .serializers import PaymentSerializer
 from rest_framework.response import Response
 from .models import Payment
+from rest_framework.throttling import AnonRateThrottle
 import requests
 
 
 class PaymentList(mixins.ListModelMixin, generics.GenericAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
+    throttle_classes = [AnonRateThrottle]
 
     def get(self, request, *args, **kwargs):
         return self.list(request)

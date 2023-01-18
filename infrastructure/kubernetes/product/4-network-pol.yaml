@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: product-net-pol
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: product
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+      ports:
+        - protocol: TCP
+          port: 3000

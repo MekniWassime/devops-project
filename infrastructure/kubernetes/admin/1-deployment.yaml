@@ -21,5 +21,12 @@ spec:
       containers:
       - name: admin
         image: mekniwassime/devops_project:admin-a14c4e34ed61d898450dd61c4e55cca71273929f
-        ports:
-        - containerPort: 80
+      - name: sidecar
+        image: mekniwassime/devops_project:sidecarproxy-9ec25f1c1add0fda807fc16f5261b94205783359
+        env:
+        - name: PORT
+          value: "3000"
+        - name: TARGET_PORT
+          value: "8000"
+        - name: UPSTREAM_HOST
+          value: "localhost"

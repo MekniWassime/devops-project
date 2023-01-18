@@ -3,9 +3,18 @@ kind: Deployment
 metadata:
   name: payment-deployment
   labels:
+    tags.datadoghq.com/env: myenv
+    tags.datadoghq.com/service: payment-svc
+    tags.datadoghq.com/version: "1"
+    admission.datadoghq.com/enabled: "true"
+  labels:
     app: payment
   namespace: payment-ns
 spec:
+  volumes:
+    - hostPath:
+      path: /var/run/datadog/
+    name: apmsocketpath
   replicas: 1
   selector:
     matchLabels:
@@ -22,6 +31,29 @@ spec:
       containers:
       - name: payment
         image: mekniwassime/devops_project:payment-06d331c79f99bd5d168f7bc610a5b16c5ac4fa0f
+        env:
+          - name: DD_LOGS_INJECTION
+            value: "true"
+          - name: DD_TRACE_STARTUP_LOGS
+            value: "true"
+          - name: DD_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: DD_SITE
+            value: "datadoghq.eu"
+          - name: DD_ENV
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/env']
+          - name: DD_SERVICE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/service']
+          - name: DD_VERSION
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['tags.datadoghq.com/version']
       - name: sidecar
         image: mekniwassime/devops_project:sidecarproxy-9ec25f1c1add0fda807fc16f5261b94205783359
         env:

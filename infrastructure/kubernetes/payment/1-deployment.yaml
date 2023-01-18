@@ -22,6 +22,9 @@ spec:
         prometheus.io/scrape: "true"
         admission.datadoghq.com/python-lib.version: v1.7.2
       labels:
+        tags.datadoghq.com/env: myenv
+        tags.datadoghq.com/service: payment-svc
+        tags.datadoghq.com/version: "1"
         app: payment
     spec:
       volumes:

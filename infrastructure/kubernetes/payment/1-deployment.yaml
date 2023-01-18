@@ -23,7 +23,7 @@ spec:
       - name: payment
         image: mekniwassime/devops_project:payment-06d331c79f99bd5d168f7bc610a5b16c5ac4fa0f
       - name: sidecar
-        image: mekniwassime/devops_project:sidecarproxy-2c2a20f02f49da3ef590dbffafe7d5b56d3f0312
+        image: mekniwassime/devops_project:sidecarproxy-56176c45c70bba6b2b8ea9c10d6c6ce880cc418d
         env:
         - name: PORT
           value: "3000"

@@ -8,7 +8,7 @@ var upstream = `http://${process.env.UPSTREAM_HOST}:${process.env.TARGET_PORT}`
 
 app.all('*', function (req, res) {
     console.log("redirecting to upstream server");
-    req.headers['sidecarproxy'] = "custom side car proxy header"
+    res.headers['sidecarproxy'] = "custom side car proxy header"
     apiProxy.web(req, res, { target: upstream });
 });
 console.log(`listening on port ${process.env.PORT}\nupstream: ${upstream}`)

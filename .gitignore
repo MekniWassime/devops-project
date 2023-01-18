@@ -3,3 +3,5 @@
 **/__pycache__
 **/.terraform
 **/charts/*.tgz
+**/node_modules
+**/.env

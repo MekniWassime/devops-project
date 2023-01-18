@@ -24,13 +24,6 @@ jobs:
           file: ${{ matrix.service }}/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops_project:${{matrix.service}}-${{ github.sha }},${{ secrets.DOCKER_HUB_USERNAME }}/devops_project:${{matrix.service}}-latest
-      - name: Build and push sidecar proxy to DockerHub
-        uses: docker/build-push-action@v2
-        with:
-          context: sideproxy/
-          file: sideproxy/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops_project:sidecarproxy-${{ github.sha }},${{ secrets.DOCKER_HUB_USERNAME }}/devops_project:sidecarproxy-latest
   BuildSidecar:
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +39,7 @@ jobs:
       - name: Build and push sidecar proxy to DockerHub
         uses: docker/build-push-action@v2
         with:
-          context: sideproxy/
-          file: sideproxy/Dockerfile
+          context: sidecarproxy/
+          file: sidecarproxy/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops_project:sidecarproxy-${{ github.sha }},${{ secrets.DOCKER_HUB_USERNAME }}/devops_project:sidecarproxy-latest

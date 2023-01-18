@@ -20,6 +20,7 @@ spec:
         prometheus.io/port: "9000"
         prometheus.io/path: "/metrics"
         prometheus.io/scrape: "true"
+        admission.datadoghq.com/python-lib.version: v1.7.2
       labels:
         app: payment
     spec:

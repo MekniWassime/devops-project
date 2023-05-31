@@ -1,0 +1,27 @@
+targetSystem: "linux"
+
+datadog:
+  site: datadoghq.eu
+  # datadog.apiKey -- Your Datadog API key
+  apiKey: a378176be240fafe64c870a1619cd813
+  kubelet: 
+    tlsVerify: false
+
+  logs:
+    enabled: true
+    containerCollectAll: true
+  # otlp:
+  #   receiver:
+  #     protocols:
+  #       grpc:
+  #         enabled: true
+  #       http:
+  #         enabled: true
+  apm:
+    portEnabled: true
+    apm_non_local_traffic: true
+
+  clusterAgent:
+    admissionController:
+      enabled: true
+      mutateUnlabelled: true
